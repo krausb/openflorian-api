@@ -1,0 +1,34 @@
+M.........506950990.08560593DSDGHSDHHSEE.....EEHDE..EEEHEDGGHDSEBHEHHDEdbvü#
+ALARMSCHREIBEN INTEGRIERTE LEITSTELLE REGION INGOLSTADT
+Telefon: 0841 14254-112 : Telefax: 0841 14254-160
+----------- EINSATZORT ------------------------------------------------------
+OBJEKT :
+STATION :
+PLANNUMMER:
+STRASSE : B16a Menning
+KREUZUNG :
+ORT : 85088 Menning - Vohburg a.d.Donau
+KOORDINATE: 4470632.65064705/5404841.38761476 (Gauß-Krüger Zone 4)
+----------- EREIGNIS --------------------------------------------------------
+EINSATZ-NR: T 1.3 151209 5074
+SCHLAGWORT: VU mit PKW
+STICHWORT : VU 1
+PRIORITAT : 1 (1 = Lebensgefahr 2 = Notfall 3 = nicht zeitkritisch)
+TERMIN :
+----------- ZIELORT ---------------------------------------------------------
+OBJEKT :
+STATION :
+STRASSE :
+ORT :
+----------- BEMERKUNG -------------------------------------------------------
+PKW FRONTAL
+Grad / Kilometer vom Hubschrauberstandort CH 32:
+84 - 14 km
+Grad / Kilometer vom Hubschrauberstandort CH 32:
+90 - 18 km
+----------- PATIENT(-EN) ----------------------------------------------------
+----------- EINSATZMITTEL ---------------------------------------------------
+1.3.4 PAF FF Menning >> gefordert:
+1.3.4 PAF FL Menning 44/1 >> gefordert: Gruppe (Takt. Einheit, Dispo)
+1.3.4 PAF FL Vohburg 40/1 >> gefordert: Löschwasser ELiterl
+ENDE DES ALARMSCHREIBENS

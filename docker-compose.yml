@@ -1,0 +1,77 @@
+version: '3'
+volumes:
+    kong_data: {}
+
+networks:
+    openflorian-net:
+
+services:
+    kong:
+        image: "kong:latest"
+        user: "root"
+        container_name: kong
+        environment:
+            KONG_DATABASE: 'off'
+            KONG_PROXY_ACCESS_LOG: /dev/stdout
+            KONG_PROXY_ERROR_LOG: /dev/stderr
+            KONG_DECLARATIVE_CONFIG: /kong.yml
+        depends_on:
+            - openflorian
+            - openflorian-ui
+        links:
+            - openflorian
+            - openflorian-ui
+        volumes:
+          - ./kong.yml:/kong.yml
+        ports:
+            - "8000:8000/tcp"
+        restart: on-failure
+        networks:
+            - openflorian-net
+        expose:
+            - '8080'
+    openflorian-ui:
+        build: frontend/.
+        container_name: openflorian-ui
+        networks:
+            - openflorian-net
+        depends_on:
+            - openflorian
+        restart: on-failure
+    openflorian:
+        build:
+            context: backend/.
+            args:
+                baseimage: tesseractshadow/tesseract4re
+        container_name: openflorian
+        restart: on-failure
+        depends_on:
+            - mysql
+        links:
+            - mysql
+        volumes:
+            - ./src:/opt/openflorian/src
+            - ./target:/opt/openflorian/target
+            - /tmp/faxincoming:/opt/openflorian/faxincoming
+            - /tmp/faxarchive:/opt/openflorian/faxarchive
+        environment:
+            - MYSQL_HOST=mysql:3306
+            - MYSQL_USER=openflorian
+            - MYSQL_PASSWORD=openflorian123
+            - MYSQL_DB=openflorian
+        networks:
+            - openflorian-net
+        expose:
+            - '8080'
+    mysql:
+        image: mysql/mysql-server:8.0
+        container_name: mysql
+        restart: on-failure
+        environment:
+            - MYSQL_DATABASE=openflorian
+            - MYSQL_USER=openflorian
+            - MYSQL_PASSWORD=openflorian123
+        networks:
+            - openflorian-net
+        expose:
+            - '3306'

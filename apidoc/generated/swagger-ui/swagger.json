@@ -1,0 +1,20 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "The Alarm REST API enables management of the server via REST",
+    "version" : "v1",
+    "title" : "Alarm REST API",
+    "termsOfService" : "http://github.com/krausb",
+    "contact" : {
+      "name" : "Bastian Kraus",
+      "url" : "http://about.me/bastian.kraus"
+    },
+    "license" : {
+      "name" : "GPL v3",
+      "url" : "hhttp://www.gnu.de/documents/gpl.en.html"
+    }
+  },
+  "host" : "of-server",
+  "basePath" : "/rest/api",
+  "schemes" : [ "http", "https" ]
+}

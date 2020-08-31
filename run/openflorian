@@ -1,0 +1,79 @@
+#!/bin/sh
+
+# This file is part of Openflorian.
+# 
+# Copyright (C) 2015 - 2019  Bastian Kraus
+# 
+# Openflorian is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version)
+#     
+# Openflorian is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#     
+# You should have received a copy of the GNU General Public License
+# along with Openflorian.  If not, see <http://www.gnu.org/licenses/>.
+
+# Openflorian Master rc.d handler
+# @author Bastian Kraus <bofh@k-hive.de>
+
+### BEGIN INIT INFO
+# Provides:          Openflorian-API
+# Required-Start:    
+# Required-Stop:     
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Openflorian Server
+# Description:       
+### END INIT INFO
+
+### CONFIGURATION
+### Modify this path to the directory where the jar and the config file is in
+BASE_PATH="/opt/openflorian"
+
+PID_FILE="$BASE_PATH/.pid";
+START_CMD="java -jar $BASE_PATH/target/openflorian-master-1.0.jar &";
+
+# set current working directory
+cd "$BASE_PATH";
+
+# Actions
+case "$1" in
+    start)
+        # START
+        echo "Starting Openflorian Master service...";
+        if ! $(cat "$PID_FILE" 2>/dev/null) || ! $( kill -0 $(cat "$PID_FILE") 2>/dev/null ) ; then
+                eval $START_CMD;
+                echo $! > "$PID_FILE";
+                echo "Openflorian master service started with pid: $(cat "$PID_FILE")";
+            else
+                echo "Openflorian master service already running with PID: $(cat "$PID_FILE")";
+        fi
+        ;;
+    stop)
+        # STOP
+        echo "Stopping Openflorian master Service with pid: $(cat "$PID_FILE")...";
+        pid=$(cat "$PID_FILE")
+        if  $(kill -0 $(cat "$PID_FILE") 2>/dev/null ) ; then
+                kill -15 $pid;
+                rm -f $PID_FILE;
+                echo "... stopped!";
+        else
+                echo "... no process with pid $pid found!";
+        fi
+        ;;
+    restart)
+        # RESTART
+        $0 stop;
+        $0 start;
+        ;;
+	*)
+        echo "Usage: /etc/init.d/openflorian {start|stop|restart}"
+        exit 1
+        ;;
+esac
+
+exit 0

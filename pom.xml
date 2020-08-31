@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.1.8.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>de.openflorian</groupId>
+	<artifactId>openflorian-api</artifactId>
+	<version>1.0</version>
+	<name>openflorian-api</name>
+	<description>Openflorian</description>
+
+	<properties>
+		<java.version>11</java.version>
+		<!-- General properties -->
+		<maven.test.skip>true</maven.test.skip>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<build.version>0.1-DEV</build.version>
+
+		<docker.image.prefix>openflorian</docker.image.prefix>
+
+		<swagger-maven-plugin.version>3.1.4</swagger-maven-plugin.version>
+		<swagger.version>1.5.3</swagger.version>
+
+		<!-- Dependency properties -->
+		<junit.version>4.12</junit.version>
+		<mockito.version>1.10.19</mockito.version>
+		<powermock.version>1.6.2</powermock.version>
+		<wiremock.version>2.12.0</wiremock.version>
+
+		<sl4j.version>1.7.12</sl4j.version>
+		<log4j.version>1.2.17</log4j.version>
+
+		<commons-io.version>2.5</commons-io.version>
+
+		<jackson.version>2.9.10</jackson.version>
+		<vertx.version>3.8.1</vertx.version>
+		<mysql.version>8.0.17</mysql.version>
+
+		<!-- used in case of a transient dependency problem and java8 -->
+		<javassist.version>3.25.0-GA</javassist.version>
+		<weatherapi.version>1.2.0</weatherapi.version>
+		<openweathermap.version>2.5.0.3</openweathermap.version>
+		<proj4j.version>0.1.0</proj4j.version>
+		<supercsv.version>2.4.0</supercsv.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>${mockito.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-module-junit4</artifactId>
+			<version>${powermock.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-api-mockito</artifactId>
+			<version>${powermock.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.github.tomakehurst</groupId>
+			<artifactId>wiremock</artifactId>
+			<version>${wiremock.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Jackson -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+
+		<!-- Vert.X -->
+		<dependency>
+			<groupId>io.vertx</groupId>
+			<artifactId>vertx-core</artifactId>
+			<version>${vertx.version}</version>
+		</dependency>
+
+		<!-- Proj4J Geo Transformation -->
+		<dependency>
+			<groupId>org.osgeo</groupId>
+			<artifactId>proj4j</artifactId>
+			<version>${proj4j.version}</version>
+		</dependency>
+
+		<!-- Weather API -->
+		<dependency>
+			<groupId>com.github.fedy2</groupId>
+			<artifactId>yahoo-weather-java-api</artifactId>
+			<version>${weatherapi.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-simple</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${commons-io.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpcore</artifactId>
+			<version>4.4.8</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20160212</version>
+		</dependency>
+
+		<dependency>
+			<groupId>net.aksingh</groupId>
+			<artifactId>owm-japis</artifactId>
+			<version>${openweathermap.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-core</artifactId>
+			<scope>compile</scope>
+			<version>${swagger.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.ws.rs</groupId>
+					<artifactId>jsr311-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.1</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+
+	<build>
+		<finalName>alarm-master-${build.version}</finalName>
+		<testResources>
+			<testResource>
+				<directory>${project.basedir}/src/test/resources</directory>
+			</testResource>
+		</testResources>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>com.github.kongchen</groupId>
+				<artifactId>swagger-maven-plugin</artifactId>
+				<version>${swagger-maven-plugin.version}</version>
+				<configuration>
+					<apiSources>
+						<apiSource>
+							<springmvc>false</springmvc>
+							<locations>de.alarm.ws.api</locations>
+							<schemes>http,https</schemes>
+							<host>of-server</host>
+							<basePath>/rest/api</basePath>
+							<info>
+								<title>Alarm REST API</title>
+								<version>v1</version>
+								<description>The Alarm REST API enables management of the server via REST</description>
+								<termsOfService>
+									http://github.com/krausb
+								</termsOfService>
+								<contact>
+									<name>Bastian Kraus</name>
+									<url>http://about.me/bastian.kraus</url>
+								</contact>
+								<license>
+									<url>hhttp://www.gnu.de/documents/gpl.en.html</url>
+									<name>GPL v3</name>
+								</license>
+							</info>
+							<templatePath>${basedir}/apidoc/template/strapdown.html.hbs</templatePath>
+							<outputPath>${basedir}/apidoc/generated/api-doc.html</outputPath>
+							<swaggerDirectory>${basedir}/apidoc/generated/swagger-ui</swaggerDirectory>
+						</apiSource>
+					</apiSources>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<version>1.4.9</version>
+				<configuration>
+					<repository>${docker.image.prefix}/${project.artifactId}</repository>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>unpack</id>
+						<phase>package</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>${project.artifactId}</artifactId>
+									<version>${project.version}</version>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

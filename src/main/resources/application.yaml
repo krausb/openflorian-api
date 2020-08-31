@@ -1,0 +1,71 @@
+spring:
+  jpa:
+    database: MYSQL
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+  datasource:
+    platform: mysql
+    url: jdbc:mysql://${MYSQL_HOST:localhost:3306}/${MYSQL_DB:openflorian}?useUnicode=true&characterEncoding=utf8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: ${MYSQL_USER:openflorian}
+    password: ${MYSQL_PASSWORD:openflorian123}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+logging:
+  level:
+    org.springframework.web: ${DEBUG_LEVEL:DEBUG}
+    org.hibernate: ERROR
+    de.openflorian: ${DEBUG_LEVEL:DEBUG}
+openflorian:
+  cipherKeys:
+    blowfish: "=EfmRwcD8iVTQLoMaB'nbIf@jAC}EjFyBHUM<O5KJpBxuAGTq"
+    xor: "=xa6RlXknis@FwAvXzucctItJzrDBe$s`RQ6LvrhbUjSYF:HL"
+  faxObserver:
+    observerDir: "/opt/openflorian/faxincoming"
+    archiveDir: "/opt/openflorian/faxarchive"
+    incurreDelay: 30000
+  faxTransformer:
+    cmd: "tesseract -l deu --psm 6 ###INPUT### ###OUTPUT###"
+    vars:
+      inputVar: "###INPUT###"
+      outputVar: "###OUTPUT###"
+  faxParser:
+    currentStation: Vohburg
+    patterns:
+      operationNrPattern: einsatz[^\w]+nr\s?['13=:]+([^\n]*)
+      objectPattern: "[od]?bjekt\\s?['13=:]+([^\\n]*)"
+      streetPattern: strasse\s?['13=:]+([^\n]*)
+      crosswayPattern: kreuzung\s?['13=:]+([^\n]*)
+      cityPattern: "\\b(?:[od]rt)\\b\\s?['13=:]+([^\\n]*)"
+      geocoordinatesPattern: koordinate\s?['13=:]+\s?([0-9]+\.[0-9]+)\s?/\s?([0-9]+\.[0-9]+)([^\n]*)
+      priorityPattern: pri[od]?rit[aä]t\s?['13=:]+(\d{1})\s?([^\n]*)
+      keywordPattern: stichw[od]?rt\s?['13=:]+([^\n]*)
+      buzzwordPattern: schlagw[od]?rt\s?['13=:]+([^\n]*)
+      resourcesPattern: "(?m)^\\d{1}[\\s.]{1}\\d{1}[\\s.]{1}\\d{1}\\s+([^\\n]*)$"
+      resourcePurposeSplitPattern: ">> gefordert:"
+      stationresourcePattern: Vohburg
+      resourcecallnamePattern: "([0-9a-zA-Z]+[\\-/]{1}[a-zA-Z0-9]+)"
+    geocoordinates:
+      source: epsg:31468
+      target: WGS84
+      targetParams: "+title=long/lat:WGS84 +proj=longlat +datum=WGS84 +units=degrees"
+  urlAlerter:
+    - protocol: http
+      host: localhost
+      port: 8080
+      path: "/alert"
+      encryptPayload: true
+    - protocol: https
+      host: login.fireboard.net
+      port: 443
+      path: "/api?authkey={authKey}&call=operation_data"
+      authKey: "7kzrOY7UEodQcjIO3zdSteNY1H2fXHgN"
+      encryptedPayload: false
+  weather:
+    loadPeriod: 30
+    yahooWeatherApi:
+      consumerKey: dj0yJmk9dlNadDFjU1N0cHdDJmQ9WVdrOU9YVTFjVTF6TXpZbWNHbzlNQS0tJnM9Y29uc3VtZXJzZWNyZXQmeD00MA--
+      consumerSecret: eec926106abeeb02bafff732a15eb95bc6bbf90f
+      woeid: 12836980
+    openWeatherMapApi:
+      apiKey: 652cba35006b451a1e035e0fdd83ba6b
+      cityId: 2816776
