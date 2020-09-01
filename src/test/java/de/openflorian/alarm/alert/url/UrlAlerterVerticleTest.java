@@ -1,4 +1,4 @@
-package de.openflorian.alarm.alert.impl;
+package de.openflorian.alarm.alert.url;
 
 /*
  * This file is part of Openflorian.
@@ -22,6 +22,7 @@ package de.openflorian.alarm.alert.impl;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import com.github.tomakehurst.wiremock.stubbing.StubMapping;
 import de.openflorian.OperationGenerator;
+import de.openflorian.alarm.alert.PowerAlarmAlerter;
 import de.openflorian.config.OpenflorianConfig;
 import de.openflorian.crypt.CryptCipherService;
 import de.openflorian.data.model.Operation;
@@ -30,14 +31,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import java.util.List;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
@@ -76,7 +72,7 @@ public class UrlAlerterVerticleTest {
         );
 
         log.info("Sending probe: " + probeJson);
-        UrlAlerterVerticle urlAlerter = new UrlAlerterVerticle(alerter);
+        PowerAlarmAlerter urlAlerter = new PowerAlarmAlerter(alerter);
         urlAlerter.alert(probe);
 
         verify(exactly(1),
@@ -117,7 +113,7 @@ public class UrlAlerterVerticleTest {
         );
 
         log.info("Sending probe: " + probeJson);
-        UrlAlerterVerticle urlAlerter = new UrlAlerterVerticle(alerter);
+        PowerAlarmAlerter urlAlerter = new PowerAlarmAlerter(alerter);
         urlAlerter.alert(probe);
 
         verify(exactly(1),

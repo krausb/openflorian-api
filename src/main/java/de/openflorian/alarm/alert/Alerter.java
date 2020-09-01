@@ -20,24 +20,30 @@ package de.openflorian.alarm.alert;
  */
 
 import de.openflorian.EventBusAddresses;
+import de.openflorian.config.OpenflorianConfig;
 import de.openflorian.data.model.Operation;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.eventbus.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.validation.ValidationException;
+
 /**
  * Abstract UrlAlerter
  *
  * Provides basic capabilities for implementation of a concrete urlAlerter.
  */
-public abstract class AbstractAlerter extends AbstractVerticle {
+public abstract class Alerter extends AbstractVerticle {
 
-    private static final Logger log = LoggerFactory.getLogger(AbstractAlerter.class);
+    private static final Logger log = LoggerFactory.getLogger(Alerter.class);
 
     @Override
     public void start() {
         log.info("Starting " + getClass().getSimpleName() + " ...");
+
+        log.info("Validating configuration...");
+        validate();
 
         log.info("Registering EventBus consumer...");
         vertx.eventBus().consumer(EventBusAddresses.ALARM_INCURRED, msg -> alert(msg));
@@ -63,5 +69,13 @@ public abstract class AbstractAlerter extends AbstractVerticle {
      * @param operation
      */
     public abstract void alert(Operation operation) throws Exception;
+
+    /**
+     * Validate the provided configuration. This method will be called upfront EventBus registration
+     * on {@link Alerter#start()}
+     *
+     * @throws ValidationException
+     */
+    public abstract void validate() throws ValidationException;
 
 }

@@ -3,7 +3,7 @@ package de.openflorian.config;
 /*
  * This file is part of Openflorian.
  *
- * Copyright (C) 2015  Bastian Kraus
+ * Copyright (C) 2015 - 2020 Bastian Kraus
  *
  * Openflorian is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,25 +19,14 @@ package de.openflorian.config;
  * along with Openflorian.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 /**
  * Configuration Wrapper for Openflorian
- *
- * @author Bastian Kraus <bofh@k-hive.de>
  */
 @Component
 @ConfigurationProperties("openflorian")
@@ -47,7 +36,7 @@ public class OpenflorianConfig {
     private FaxObserver faxObserver;
     private FaxTransformer faxTransformer;
     private FaxParser faxParser;
-    private List<UrlAlerter> urlAlerter;
+    private List<Alerter> alerter;
     private Weather weather;
 
 	public CipherKeys getCipherKeys() {
@@ -82,12 +71,12 @@ public class OpenflorianConfig {
 		this.faxParser = faxParser;
 	}
 
-	public List<UrlAlerter> getUrlAlerter() {
-		return urlAlerter;
+	public List<Alerter> getAlerter() {
+		return alerter;
 	}
 
-	public void setUrlAlerter(List<UrlAlerter> urlAlerter) {
-		this.urlAlerter = urlAlerter;
+	public void setAlerter(List<Alerter> alerter) {
+		this.alerter = alerter;
 	}
 
 	public Weather getWeather() {
@@ -98,60 +87,32 @@ public class OpenflorianConfig {
 		this.weather = weather;
 	}
 
-	public static class UrlAlerter {
-        private String protocol;
-        private String host;
-        private int port;
-        private String path;
-        private String authkey;
-        private boolean encryptPayload;
+	public static class Alerter {
+        private String type;
+        private Map<String, String> parameter;
 
-		public String getProtocol() {
-			return protocol;
+        public String getType() {
+        	return type;
 		}
 
-		public void setProtocol(String protocol) {
-			this.protocol = protocol;
+		public void setType(String type) {
+        	this.type = type;
 		}
 
-		public String getHost() {
-			return host;
+		public Map<String, String> getParameter() {
+			return parameter;
 		}
 
-		public void setHost(String host) {
-			this.host = host;
+		public void setParameter(Map<String, String> parameter) {
+			this.parameter = parameter;
 		}
 
-		public int getPort() {
-			return port;
-		}
-
-		public void setPort(int port) {
-			this.port = port;
-		}
-
-		public String getPath() {
-			return path;
-		}
-
-		public void setPath(String path) {
-			this.path = path;
-		}
-
-		public String getAuthkey() {
-			return authkey;
-		}
-
-		public void setAuthkey(String authkey) {
-			this.authkey = authkey;
-		}
-
-		public boolean isEncryptPayload() {
-			return encryptPayload;
-		}
-
-		public void setEncryptPayload(boolean encryptPayload) {
-			this.encryptPayload = encryptPayload;
+		@Override
+		public String toString() {
+			return "Alerter{" +
+					"type='" + type + '\'' +
+					", parameter=" + parameter +
+					'}';
 		}
 	}
 

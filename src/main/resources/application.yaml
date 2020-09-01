@@ -22,7 +22,7 @@ openflorian:
   faxObserver:
     observerDir: "/opt/openflorian/faxincoming"
     archiveDir: "/opt/openflorian/faxarchive"
-    incurreDelay: 30000
+    incurreDelay: 3000
   faxTransformer:
     cmd: "tesseract -l deu --psm 6 ###INPUT### ###OUTPUT###"
     vars:
@@ -48,18 +48,15 @@ openflorian:
       source: epsg:31468
       target: WGS84
       targetParams: "+title=long/lat:WGS84 +proj=longlat +datum=WGS84 +units=degrees"
-  urlAlerter:
-    - protocol: http
-      host: localhost
-      port: 8080
-      path: "/alert"
-      encryptPayload: true
-    - protocol: https
-      host: login.fireboard.net
-      port: 443
-      path: "/api?authkey={authKey}&call=operation_data"
-      authKey: "7kzrOY7UEodQcjIO3zdSteNY1H2fXHgN"
-      encryptedPayload: false
+  alerter:
+    - type: PowerAlarmAlerter
+      parameter:
+        alertgroup: TEST
+        protocol: https
+        host: www.poweralarm.de
+        port: 443
+        apikey: "<apikey>"
+        alarmtextPrefix: "Alarm FF Vohburg 21010 - Stichwort: "
   weather:
     loadPeriod: 30
     yahooWeatherApi:

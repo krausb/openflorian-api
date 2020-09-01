@@ -22,6 +22,7 @@ package de.openflorian;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
+import de.openflorian.alarm.alert.AlerterFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -31,7 +32,7 @@ import org.slf4j.LoggerFactory;
 
 import de.openflorian.alarm.*;
 import de.openflorian.data.model.Operation;
-import de.openflorian.alarm.alert.impl.UrlAlerterVerticle;
+import de.openflorian.alarm.alert.PowerAlarmAlerter;
 import de.openflorian.config.OpenflorianConfig;
 
 import io.vertx.core.AsyncResult;
@@ -139,9 +140,8 @@ public class OpenflorianApplication implements ApplicationContextAware {
 	private void deployVerticles() {
 		log.info("Deploying configured additional services...");
 
-		if(!config.getUrlAlerter().isEmpty()) {
-			log.debug("UrlAlerters: " + config.getUrlAlerter());
-			config.getUrlAlerter().stream().forEach(a -> vertx.deployVerticle(new UrlAlerterVerticle(a)));
+		if(!config.getAlerter().isEmpty()) {
+			config.getAlerter().stream().forEach(a -> vertx.deployVerticle(AlerterFactory.alerterOf(a)));
 		}
 	}
 
