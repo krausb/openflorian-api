@@ -28,7 +28,7 @@
 		<swagger.version>1.5.3</swagger.version>
 
 		<!-- Dependency properties -->
-		<junit.version>4.12</junit.version>
+		<junit.version>4.13.1</junit.version>
 		<mockito.version>1.10.19</mockito.version>
 		<powermock.version>1.6.2</powermock.version>
 		<wiremock.version>2.12.0</wiremock.version>
