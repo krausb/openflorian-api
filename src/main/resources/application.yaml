@@ -60,9 +60,9 @@ openflorian:
   weather:
     loadPeriod: 30
     yahooWeatherApi:
-      consumerKey: dj0yJmk9dlNadDFjU1N0cHdDJmQ9WVdrOU9YVTFjVTF6TXpZbWNHbzlNQS0tJnM9Y29uc3VtZXJzZWNyZXQmeD00MA--
-      consumerSecret: eec926106abeeb02bafff732a15eb95bc6bbf90f
+      consumerKey: <<consumerkey>>
+      consumerSecret: <<consumersecret>>
       woeid: 12836980
     openWeatherMapApi:
-      apiKey: 652cba35006b451a1e035e0fdd83ba6b
+      apiKey: <<apikey>>
       cityId: 2816776
