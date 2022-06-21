@@ -40,7 +40,7 @@
 
 		<jackson.version>2.9.10</jackson.version>
 		<vertx.version>3.8.1</vertx.version>
-		<mysql.version>8.0.17</mysql.version>
+		<mysql.version>8.0.28</mysql.version>
 
 		<!-- used in case of a transient dependency problem and java8 -->
 		<javassist.version>3.25.0-GA</javassist.version>
